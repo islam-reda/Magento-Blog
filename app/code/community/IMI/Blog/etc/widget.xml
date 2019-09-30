@@ -1,0 +1,76 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * IMI_Blog extension
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the MIT License
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/mit-license.php
+ *
+ * @category       IMI
+ * @package        IMI_Blog
+ * @copyright      Copyright (c) 2018
+ * @license        http://opensource.org/licenses/mit-license.php MIT License
+ */
+-->
+<widgets>
+    <blog_posts_view type="imi_blog/posts_widget_view" translate="name description" module="imi_blog">
+        <name>Posts view</name>
+        <description>Posts view widget</description>
+        <is_email_compatible>0</is_email_compatible>
+        <parameters>
+            <posts_id type="complex" translate="label">
+                <visible>1</visible>
+                <required>1</required>
+                <label>Posts</label>
+                <type>label</type>
+                <helper_block>
+                    <type>imi_blog/adminhtml_posts_widget_chooser</type>
+                    <data>
+                        <button translate="open">
+                            <open>Select Posts</open>
+                        </button>
+                    </data>
+                </helper_block>
+                <sort_order>120</sort_order>
+            </posts_id>
+        </parameters>
+    </blog_posts_view>
+    <blog_posts_collection type="imi_blog/posts_widget_list" translate="name description" module="imi_blog">
+        <name>Posts Collection</name>
+        <description>Allows to add posts</description>
+      <parameters>
+        <count>
+          <label>Count Posts</label>
+          <visible>1</visible>
+          <required>1</required>
+          <type>text</type>
+        </count>
+      </parameters>
+    </blog_posts_collection>
+    <blog_posts_link type="imi_blog/posts_widget_link" translate="name description" module="imi_blog">
+        <name>Posts link</name>
+        <description>Posts link widget</description>
+        <is_email_compatible>0</is_email_compatible>
+        <parameters>
+            <posts_id type="complex" translate="label">
+                <visible>1</visible>
+                <required>1</required>
+                <label>Posts</label>
+                <type>label</type>
+                <helper_block>
+                    <type>imi_blog/adminhtml_posts_widget_chooser</type>
+                    <data>
+                        <button translate="open">
+                            <open>Select Posts</open>
+                        </button>
+                    </data>
+                </helper_block>
+                <sort_order>130</sort_order>
+            </posts_id>
+        </parameters>
+    </blog_posts_link>
+</widgets>

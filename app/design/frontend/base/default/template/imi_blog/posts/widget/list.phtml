@@ -1,0 +1,116 @@
+<?php
+/**
+ * IMI_Blog extension
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the MIT License
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/mit-license.php
+ *
+ * @category       IMI
+ * @package        IMI_Blog
+ * @copyright      Copyright (c) 2018
+ * @license        http://opensource.org/licenses/mit-license.php MIT License
+ */
+/**
+ * Posts list template
+ *
+ * @category    IMI
+ * @package     IMI_Blog
+ * @author      Ultimate Module Creator
+ */
+?>
+
+<div class="imi_blog_posts">
+<?php
+ $links = $this->getAjaxLinks();
+ ?>
+<?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
+<?php $_postss = $this->getCurrentPosts(); ?>
+<div class="page-title posts-title">
+    <h1><?php echo Mage::helper('imi_blog')->__('Posts') ?></h1>
+</div>
+<?php if ($_postss->getSize() > 0) :?>
+    <div class="posts-list-container imi_posts">
+      <div class="owl-carousel owl-theme">
+        <?php foreach ($_postss as $_posts) : ?>
+              <div class="item">
+                <div class="posts-list-item">
+                    <div class="title">
+                       <strong>
+                         <a href="<?php echo Mage::getUrl($_posts->getUrlKey()); ?>">
+                           <?php echo $_posts->getTitle();?>
+                          </a>
+                      </strong>
+                    </div>
+                    <?php
+                    $Description = substr($_posts->getDescription(), 0, 50);
+                    echo $Description.' ...';
+
+                    ?>
+                    <img class="post_image" src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA).'posts/image'.$_posts->getImage();?>" alt = "<?php echo  $_posts->getTitle(); ?>" title="<?php echo $_posts->getTitle(); ?>">
+                    <div class="post-header">
+                    
+                        <span class="post-time"><i class="far fa-calendar"></i>
+                        <small class="time-stamp"><?php echo Mage::getModel('core/date')->date('M d, Y', $_posts->getCreatedAt());  ?></small></span>
+                        <i class="fas fa-th-list"></i>
+                        <span class="comment-post-link"><?php echo $this->getCategoryName($_posts->getCategoryId())->getName(); ?></span>
+                    </div>
+                </div>
+              </div>
+        <?php endforeach;?>
+      </div>
+
+    </div>
+<?php else : ?>
+    <?php echo Mage::helper('imi_blog')->__('There are no posts at this moment');?>
+<?php endif;?>
+<script>
+
+jQuery(document).ready(function($){
+  $('.owl-carousel').owlCarousel({
+      margin:15,
+      nav:true,
+      loop : true,
+      responsive:{
+          0:{
+              items:1
+          },
+          600:{
+              items:2
+          },
+          1000:{
+              items:3
+          }
+      }
+  });
+  $('.formsubmit').on('submit', function (e) {
+    e.preventDefault();
+    var comment = $(this).find('.comment_text').val();
+    var post_id = $(this).find('.post_id').val();
+    var current = $(this);
+    $('.cs-loader').show();
+    $.ajax({
+        url: "<?php echo $links['addcomment']; ?>",
+        method: "POST",
+        data: { post_id : post_id , comment : comment},
+        success: function(data) {
+          var returnedData = $.parseJSON(data);
+          $('.cs-loader').hide(200);
+          if(Number(returnedData.success) == 2){
+              window.location.href = "<?php echo Mage::getUrl('customer/account/login') ?>";
+          }
+          if(Number(returnedData.success) == 0){
+              current.find('.error').html('<?php echo $this->__('You have an error'); ?>');
+          }else{
+            current.closest('.comments').find('.viewcomments').html(returnedData.html);
+            current.find('.post_id').val('');
+          }
+        }
+    });
+  });
+});
+</script>
+</div>

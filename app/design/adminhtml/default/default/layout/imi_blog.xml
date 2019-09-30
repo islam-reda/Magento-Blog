@@ -1,0 +1,182 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * IMI_Blog extension
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the MIT License
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/mit-license.php
+ *
+ * @category       IMI
+ * @package        IMI_Blog
+ * @copyright      Copyright (c) 2018
+ * @license        http://opensource.org/licenses/mit-license.php MIT License
+ */
+-->
+<layout>
+    <adminhtml_blog_posts_index>
+        <reference name="menu">
+            <action method="setActive">
+                <menupath>imi_loyalty/imi_blog/posts</menupath>
+            </action>
+        </reference>
+        <reference name="content">
+            <block type="imi_blog/adminhtml_posts" name="posts" />
+
+        </reference>
+    </adminhtml_blog_posts_index>
+    <adminhtml_blog_posts_grid>
+        <block type="core/text_list" name="root" output="toHtml">
+            <block type="imi_blog/adminhtml_posts_grid" name="posts_grid"/>
+        </block>
+    </adminhtml_blog_posts_grid>
+
+
+    <adminhtml_blog_posts_filtercustomers>
+        <block type="core/text_list" name="root" output="toHtml">
+            <block type="imi_blog/adminhtml_posts_edit_tab_customersgrid" name="posts_customers_grid"/>
+        </block>
+    </adminhtml_blog_posts_filtercustomers>
+
+    <adminhtml_blog_posts_categories>
+       <block type="core/text_list" name="root" output="toHtml">
+           <block type="imi_blog/adminhtml_posts_edit_tab_categories" name="imi.post.edit.tab.categories"/>
+       </block>
+   </adminhtml_blog_posts_categories>
+
+    <adminhtml_blog_posts_commentgrid>
+        <block type="core/text_list" name="root" output="toHtml">
+            <block type="imi_blog/adminhtml_posts_edit_tab_grid" name="postscomment_grid"/>
+        </block>
+    </adminhtml_blog_posts_commentgrid>
+
+
+
+    <!-- Posts add/edit action -->
+    <adminhtml_blog_posts_edit>
+        <update handle="editor"/>
+        <reference name="menu">
+            <action method="setActive">
+                <menupath>imi_loyalty/imi_blog/posts</menupath>
+            </action>
+        </reference>
+        <reference name="content">
+            <block type="imi_blog/adminhtml_posts_edit" name="posts_edit"></block>
+        </reference>
+        <reference name="left">
+            <block type="imi_blog/adminhtml_posts_edit_tabs" name="posts_tabs"></block>
+        </reference>
+    </adminhtml_blog_posts_edit>
+
+    <adminhtml_blog_customerposts_index>
+        <reference name="menu">
+            <action method="setActive">
+                <menupath>imi_loyalty/imi_blog/customerpost</menupath>
+            </action>
+        </reference>
+        <reference name="content">
+            <block type="imi_blog/adminhtml_customerposts" name="customerpost" />
+        </reference>
+    </adminhtml_blog_customerposts_index>
+    <adminhtml_blog_customerposts_grid>
+        <block type="core/text_list" name="root" output="toHtml">
+            <block type="imi_blog/adminhtml_customerposts_grid" name="posts_grid"/>
+        </block>
+    </adminhtml_blog_customerposts_grid>
+    <adminhtml_blog_customerposts_edit>
+        <update handle="editor"/>
+        <reference name="menu">
+            <action method="setActive">
+                <menupath>imi_loyalty/imi_blog/customerposts</menupath>
+            </action>
+        </reference>
+        <reference name="content">
+            <block type="imi_blog/adminhtml_customerposts_edit" name="posts_edit"></block>
+        </reference>
+        <reference name="left">
+            <block type="imi_blog/adminhtml_customerposts_edit_tabs" name="posts_tabs"></block>
+        </reference>
+    </adminhtml_blog_customerposts_edit>
+    <adminhtml_blog_postcomment_index>
+        <reference name="menu">
+            <action method="setActive">
+                <menupath>imi_loyalty/imi_blog/postcomment</menupath>
+            </action>
+        </reference>
+        <reference name="content">
+            <block type="imi_blog/adminhtml_postcomment" name="postcomment" />
+
+        </reference>
+    </adminhtml_blog_postcomment_index>
+    <adminhtml_blog_postcomment_grid>
+        <block type="core/text_list" name="root" output="toHtml">
+            <block type="imi_blog/adminhtml_postcomment_grid" name="postcomment_grid"/>
+        </block>
+    </adminhtml_blog_postcomment_grid>
+    <!-- Postcomment add/edit action -->
+    <adminhtml_blog_postcomment_edit>
+        <update handle="editor"/>
+        <reference name="menu">
+            <action method="setActive">
+                <menupath>imi_loyalty/imi_blog/postcomment</menupath>
+            </action>
+        </reference>
+        <reference name="content">
+            <block type="imi_blog/adminhtml_postcomment_edit" name="postcomment_edit"></block>
+        </reference>
+        <reference name="left">
+            <block type="imi_blog/adminhtml_postcomment_edit_tabs" name="postcomment_tabs"></block>
+        </reference>
+    </adminhtml_blog_postcomment_edit>
+
+    <adminhtml_blog_category_edit>
+        <update handle="editor"/>
+        <reference name="left">
+            <block name="category.tree" type="imi_blog/adminhtml_category_tree" />
+        </reference>
+        <reference name="content">
+            <block name="category.edit" type="imi_blog/adminhtml_category_edit" template="imi_blog/category/edit.phtml" />
+        </reference>
+        <reference name="js">
+            <block type="core/template" template="catalog/wysiwyg/js.phtml" name="catalog.wysiwyg.js" />
+        </reference>
+    </adminhtml_blog_category_edit>
+
+
+
+
+        <adminhtml_blog_reply_index>
+            <reference name="menu">
+                <action method="setActive">
+                    <menupath>imi_loyalty/imi_blog/reply</menupath>
+                </action>
+            </reference>
+            <reference name="content">
+                <block type="imi_blog/adminhtml_reply" name="reply" />
+
+            </reference>
+        </adminhtml_blog_reply_index>
+        <adminhtml_blog_reply_grid>
+            <block type="core/text_list" name="root" output="toHtml">
+                <block type="imi_blog/adminhtml_reply_grid" name="reply_grid"/>
+            </block>
+        </adminhtml_blog_reply_grid>
+        <!-- Reply add/edit action -->
+        <adminhtml_blog_reply_edit>
+            <update handle="editor"/>
+            <reference name="menu">
+                <action method="setActive">
+                    <menupath>imi_loyalty/imi_blog/reply</menupath>
+                </action>
+            </reference>
+            <reference name="content">
+                <block type="imi_blog/adminhtml_reply_edit" name="reply_edit"></block>
+            </reference>
+            <reference name="left">
+                <block type="imi_blog/adminhtml_reply_edit_tabs" name="reply_tabs"></block>
+            </reference>
+        </adminhtml_blog_reply_edit>
+</layout>

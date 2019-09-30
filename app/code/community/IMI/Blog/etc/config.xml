@@ -1,0 +1,172 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * IMI_Blog extension
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the MIT License
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/mit-license.php
+ *
+ * @category       IMI
+ * @package        IMI_Blog
+ * @copyright      Copyright (c) 2018
+ * @license        http://opensource.org/licenses/mit-license.php MIT License
+ */
+-->
+<config>
+    <modules>
+        <IMI_Blog>
+            <version>1.0.1</version>
+        </IMI_Blog>
+    </modules>
+    <global>
+        <resources>
+            <imi_blog_setup>
+                <setup>
+                    <module>IMI_Blog</module>
+                    <class>IMI_Blog_Model_Resource_Setup</class>
+                </setup>
+            </imi_blog_setup>
+        </resources>
+        <blocks>
+            <imi_blog>
+                <class>IMI_Blog_Block</class>
+            </imi_blog>
+        </blocks>
+        <helpers>
+            <imi_blog>
+                <class>IMI_Blog_Helper</class>
+            </imi_blog>
+        </helpers>
+        <models>
+            <imi_blog>
+                <class>IMI_Blog_Model</class>
+                <resourceModel>imi_blog_resource</resourceModel>
+            </imi_blog>
+            <imi_blog_resource>
+                <class>IMI_Blog_Model_Resource</class>
+                <entities>
+                    <posts>
+                        <table>imi_blog_posts</table>
+                    </posts>
+                    <category>
+                        <table>imi_blog_category</table>
+                    </category>
+                    <postcomment>
+                        <table>imi_blog_postcomment</table>
+                    </postcomment>
+                    <posts_store>
+                        <table>imi_blog_posts_store</table>
+                    </posts_store>
+                    <reply>
+                        <table>imi_blog_reply</table>
+                    </reply>
+                    <category_store>
+                        <table>imi_blog_category_store</table>
+                    </category_store>
+                </entities>
+            </imi_blog_resource>
+        </models>
+        <events>
+            <controller_front_init_routers>
+                <observers>
+                    <imi_blog>
+                        <class>IMI_Blog_Controller_Router</class>
+                        <method>initControllerRouters</method>
+                    </imi_blog>
+                </observers>
+            </controller_front_init_routers>
+        </events>
+    </global>
+    <adminhtml>
+        <layout>
+            <updates>
+                <imi_blog>
+                    <file>imi_blog.xml</file>
+                </imi_blog>
+            </updates>
+        </layout>
+        <translate>
+            <modules>
+                <IMI_Blog>
+                    <files>
+                        <default>IMI_Blog.csv</default>
+                    </files>
+                </IMI_Blog>
+            </modules>
+        </translate>
+        <global_search>
+            <posts>
+                <class>imi_blog/adminhtml_search_posts</class>
+                <acl>imi_blog</acl>
+            </posts>
+            <postcomment>
+                <class>imi_blog/adminhtml_search_postcomment</class>
+                <acl>imi_blog</acl>
+            </postcomment>
+        </global_search>
+    </adminhtml>
+    <admin>
+        <routers>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <IMI_Blog before="Mage_Adminhtml">IMI_Blog_Adminhtml</IMI_Blog>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers>
+    </admin>
+    <frontend>
+        <routers>
+            <imi_blog>
+                <use>standard</use>
+                <args>
+                    <module>IMI_Blog</module>
+                    <frontName>imi_blog</frontName>
+                </args>
+            </imi_blog>
+        </routers>
+        <layout>
+
+
+            <updates>
+                <imi_blog>
+                    <file>imi_blog.xml</file>
+                </imi_blog>
+            </updates>
+        </layout>
+        <translate>
+            <modules>
+                <IMI_Blog>
+                    <files>
+                        <default>IMI_Blog.csv</default>
+                    </files>
+                </IMI_Blog>
+            </modules>
+        </translate>
+    </frontend>
+    <default>
+        <imi_blog>
+            <posts>
+                <breadcrumbs>1</breadcrumbs>
+                <meta_title>Posts</meta_title>
+                <fontawesome>0</fontawesome>
+                <jquery>0</jquery>
+                <countcomments>2</countcomments>
+                <allowcomments>1</allowcomments>
+                <owlcarausel>1</owlcarausel>
+                <approve>0</approve>
+                <allowcaptcha>0</allowcaptcha>
+            </posts>
+            <category>
+                <breadcrumbs>1</breadcrumbs>
+                <tree>1</tree>
+                <recursion>0</recursion>
+            </category>
+        </imi_blog>
+    </default>
+</config>

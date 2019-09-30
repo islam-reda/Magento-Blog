@@ -1,0 +1,148 @@
+<?php
+/**
+ * IMI_Blog extension
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the MIT License
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/mit-license.php
+ *
+ * @category       IMI
+ * @package        IMI_Blog
+ * @copyright      Copyright (c) 2018
+ * @license        http://opensource.org/licenses/mit-license.php MIT License
+ */
+/**
+ * Posts view template
+ *
+ * @category    IMI
+ * @package     IMI_Blog
+ * @author      Ultimate Module Creator
+ */
+?>
+<div class="imi_blog_posts">
+<?php
+ $links = $this->getAjaxLinks();
+ ?>
+ <div class="cs-loader" style="display:none">
+   <div class="cs-loader-inner">
+     <label>	●</label>
+     <label>	●</label>
+     <label>	●</label>
+     <label>	●</label>
+     <label>	●</label>
+     <label>	●</label>
+   </div>
+ </div>
+<?php $_posts = $this->getCurrentPosts();?>
+<?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
+<div class="page-title posts-title">
+    <h1><?php echo $_posts->getTitle(); ?></h1>
+    <div class="share">
+      <div id="fb-root"></div>
+      <script>(function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = 'https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.0&appId=591454824534782&autoLogAppEvents=1';
+        fjs.parentNode.insertBefore(js, fjs);
+      }(document, 'script', 'facebook-jssdk'));</script>
+
+      <!-- Your share button code -->
+      <div class="fb-share-button" data-href="<?php echo Mage::getUrl($_posts->getUrlKey()); ?>" data-layout="button" data-size="small" data-mobile-iframe="false"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=<?php echo Mage::getUrl($_posts->getUrlKey()); ?>&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">
+        <?php echo $this->__('Share'); ?></a>
+      </div>
+      <a href="http://twitter.com/home?status=Share <?php echo $_posts->getTitle();  ?> <?php echo Mage::getUrl($_posts->getUrlKey()); ?>" title="Click to send this product to Twitter!" target="_blank">
+        <i class="fab fa-twitter"></i>
+			</a>
+    </div>
+</div>
+<div class="posts-view">
+  <div class="posts-list-container imi_posts">
+      <div class="posts-list-item">
+          <div class="title">
+             <strong>
+              <?php echo $_posts->getTitle();?>
+            </strong>
+          </div>
+          <?php echo $_posts->getDescription();?>
+          <img class="post_image" src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA).'posts/image'.$_posts->getImage();?>" alt = "<?php echo  $_posts->getTitle(); ?>" title="<?php echo $_posts->getTitle(); ?>">
+          <div class="post-header">
+              <p class="post-by">
+                    <span class="post-user"><i class="fas fa-user-tie"></i><span><?php echo ($_posts->getIsAdmin() == 1) ? $this->__('Posted by admin') : $this->__('Posted by customer'); ?></span></span>
+              </p>
+              <span class="post-time"><i class="far fa-calendar"></i>
+              <small class="time-stamp"><?php echo Mage::getModel('core/date')->date('M d, Y', $_posts->getCreatedAt());  ?></small></span>
+              <i class="fas fa-th-list"></i>
+              <span class="comment-post-link"><?php echo $this->getCategoryName($_posts->getCategoryId())->getName(); ?></span>
+          </div>
+          <div class="comments">
+              <?php if(Mage::getStoreConfig('imi_blog/posts/allowcomments')){ ?>
+                <div class="commentdata">
+                  <form method="post" class="formsubmit" method="post">
+                      <span class="error"></span>
+                      <input name="form_key" type="hidden" value="<?php echo Mage::getSingleton('core/session')->getFormKey() ?>" />
+                      <input name="post_id" type="hidden" class="post_id" value="<?php echo $_posts->getId(); ?>" />
+                      <?php
+                      $isEnable = 'false';
+                      $allowcaptcha = Mage::getStoreConfig('imi_blog/posts/allowcaptcha');
+                      if($allowcaptcha && Mage::getStoreConfig('imi_blog/posts/recaptchakey')){ ?>
+                        <div class="g-recaptcha"
+                            data-sitekey="<?php echo Mage::getStoreConfig('imi_blog/posts/recaptchakey') ?>"
+                            >
+                            <?php $isEnable = 'true'; ?>
+                        </div>
+                      <?php } ?>
+                      <input type="text" name="comment" value="" placeholder="<?php echo $this->__('Please type your comment'); ?>" id="comment_text" class="comment_text">
+                      <button type="submit" class="push_comment">
+                        <i class="fas fa-arrow-circle-right"></i>
+                      </button>
+                  </form>
+                </div>
+              <?php } ?>
+          <div class="viewcomments">
+              <?php $this->getChild("posts_comments")->setData("posts", $_posts); ?>
+              <?php echo $this->getChildHtml('posts_comments',false); ?>
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
+</div>
+<script>
+jQuery(document).ready(function($){
+  $('.formsubmit').on('submit', function (e) {
+    e.preventDefault();
+    var comment = $(this).find('.comment_text').val();
+    var post_id = $(this).find('.post_id').val();
+    var current = $(this);
+    var capatha = "<?php echo $isEnable ?>";
+    if(capatha == 'true'){
+      var capatha = grecaptcha.getResponse();
+    }else{
+      var capatha = false;
+    }
+    $('.cs-loader').show();
+    $.ajax({
+        url: "<?php echo $links['viewcomment']; ?>",
+        method: "POST",
+        data: { post_id : post_id , comment : comment,'g-recaptcha-response' : capatha},
+        success: function(data) {
+          var returnedData = $.parseJSON(data);
+          $('.cs-loader').hide(200);
+          if(Number(returnedData.success) == 2){
+              window.location.href = "<?php echo Mage::getUrl('customer/account/login') ?>";
+          }
+          if(Number(returnedData.success) == 0){
+              current.find('.error').html('<?php echo $this->__('You have an error'); ?>');
+          }else{
+            current.closest('.comments').find('.viewcomments').html(returnedData.html);
+            current.find('.comment_text').val('');
+          }
+        }
+    });
+  });
+});
+</script>

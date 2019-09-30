@@ -1,0 +1,284 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * IMI_Blog extension
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the MIT License
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/mit-license.php
+ *
+ * @category       IMI
+ * @package        IMI_Blog
+ * @copyright      Copyright (c) 2018
+ * @license        http://opensource.org/licenses/mit-license.php MIT License
+ */
+-->
+<config>
+    <tabs>
+        <imi translate="label" module="imi_blog">
+            <label>IMI</label>
+            <sort_order>2000</sort_order>
+        </imi>
+    </tabs>
+    <sections>
+        <imi_blog translate="label" module="imi_blog">
+            <class>separator-top</class>
+            <label>IMI BLOG</label>
+            <tab>imi</tab>
+            <frontend_type>text</frontend_type>
+            <sort_order>100</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+
+            <groups>
+
+                <posts translate="label" module="imi_blog">
+                    <label>Posts</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>0</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+
+                        <breadcrumbs translate="label">
+                            <label>Use Breadcrumbs</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>17</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </breadcrumbs>
+
+                        <allowcomments translate="label">
+                            <label>Allow Comments</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>12</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </allowcomments>
+                        <countcomments translate="label">
+                            <label>Count Commets In List View</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>15</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </countcomments>
+                        <owlcarausel translate="label">
+                            <label>Use owl.carousel</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </owlcarausel>
+                        <fontawesome translate="label">
+                            <label>Use Fontawesome</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </fontawesome>
+
+                        <allowcaptcha translate="label">
+                            <label>Allow Captcha on frontend</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>26</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+
+                        </allowcaptcha>
+
+                        <recaptchakey translate="label">
+
+                            <label>reCAPTCHA Site Key</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>27</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends><allowcaptcha>1</allowcaptcha></depends>
+
+                        </recaptchakey>
+
+                        <secret_key>
+
+                            <label>reCAPTCHA Secret Key</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>27</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends><allowcaptcha>1</allowcaptcha></depends>
+
+                        </secret_key>
+
+                        <approve translate="label">
+
+                            <label>Enable to Approve Comments</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>15</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+
+                        </approve>
+
+                        <sendemail translate="label">
+
+                            <label>Send Email</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>17</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Send email on each admin reply or comment</comment>
+
+                        </sendemail>
+
+                        <emailtemplate>
+
+                              <label>Select Email Template </label>
+                              <comment><![CDATA[ <br /><span style="color:#FFA500">NOTE:- Default template from locale should not be used. Make sure you add product Name in your template. For e.g., {{customer_name}} You can also use other variables like reply {{reply}} and {{comment}}</span>]]></comment>
+                              <frontend_type>select</frontend_type>
+                              <source_model>IMI_Blog_Model_Sourcemodel_Emailtemplates</source_model>
+                              <sort_order>18</sort_order>
+                              <show_in_default>1</show_in_default>
+                              <show_in_website>1</show_in_website>
+                              <show_in_store>1</show_in_store>
+                              <can_be_empty>1</can_be_empty>
+                              <depends><sendemail>1</sendemail></depends>
+
+                        </emailtemplate>
+
+                        <posttemplate>
+
+                            <label>Select Post Template </label>
+                            <comment><![CDATA[ <br /><span style="color:#FFA500">NOTE:- Default template from locale should not be used. Make sure you add product Name in your template. For e.g., {{customer_name}} You can also use other variables like reply {{title}} and {{link}}</span>]]></comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>IMI_Blog_Model_Sourcemodel_Emailtemplates</source_model>
+                            <sort_order>18</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <can_be_empty>1</can_be_empty>
+
+                        </posttemplate>
+
+                        <jquery translate="label">
+                              <label>Use Jquery</label>
+                              <frontend_type>select</frontend_type>
+                              <source_model>adminhtml/system_config_source_yesno</source_model>
+                              <sort_order>10</sort_order>
+                              <show_in_default>1</show_in_default>
+                              <show_in_website>1</show_in_website>
+                              <show_in_store>1</show_in_store>
+                        </jquery>
+                        <url_rewrite_list translate="label comment">
+                            <label>URL key for list page</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Leave empty to use default URL module/controller/action</comment>
+                        </url_rewrite_list>
+                        <url_prefix translate="label comment">
+                            <label>URL prefix</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Leave empty for no prefix</comment>
+                        </url_prefix>
+                        <url_suffix translate="label comment">
+                            <label>Url suffix</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>What goes after the dot. Leave empty for no suffix.</comment>
+                        </url_suffix>
+                        <meta_title translate="label">
+                            <label>Meta title for posts list page</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </meta_title>
+                        <meta_description translate="label">
+                            <label>Meta description for posts list page</label>
+                            <frontend_type>textarea</frontend_type>
+                            <sort_order>60</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </meta_description>
+                        <meta_keywords translate="label">
+                            <label>Meta keywords for posts list page</label>
+                            <frontend_type>textarea</frontend_type>
+                            <sort_order>70</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </meta_keywords>
+                    </fields>
+                </posts>
+                <category translate="label" module="imi_blog">
+                    <label>Category</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>10</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <breadcrumbs translate="label">
+                            <label>Use Breadcrumbs</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </breadcrumbs>
+                        <tree translate="label">
+                            <label>Display as tree</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </tree>
+                        <recursion translate="label">
+                            <label>Recursion level</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </recursion>
+                    </fields>
+                </category>
+            </groups>
+        </imi_blog>
+    </sections>
+</config>

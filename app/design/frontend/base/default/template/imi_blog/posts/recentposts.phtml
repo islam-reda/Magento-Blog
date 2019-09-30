@@ -1,0 +1,52 @@
+<?php
+/**
+ * IMI_Blog extension
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the MIT License
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/mit-license.php
+ *
+ * @category       IMI
+ * @package        IMI_Blog
+ * @copyright      Copyright (c) 2018
+ * @license        http://opensource.org/licenses/mit-license.php MIT License
+ */
+/**
+ * Category list template
+ *
+ * @category    IMI
+ * @package     IMI_Blog
+ * @author      Ultimate Module Creator
+ */
+?>
+<?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
+<div class="page-title category-title">
+    <h1><?php echo Mage::helper('imi_blog')->__('Recent posts') ?></h1>
+</div>
+<?php $_postss = $this->recentposts(); ?>
+<?php if ($_postss->getSize() > 0) :?>
+    <div class="posts-list-container imi_posts">
+    <?php foreach ($_postss as $_posts) : ?>
+        <div class="posts-list-item">
+            <div class="title">
+               <a href = "<?php echo Mage::getUrl($_posts->getUrlKey());  ?>">
+                <?php echo $_posts->getTitle();?>
+              </a>
+            </div>
+            <img class="post_image" src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA).'posts/image'.$_posts->getImage();?>" alt = "<?php echo  $_posts->getTitle(); ?>" title="<?php echo $_posts->getTitle(); ?>">
+            <div class="post-header">
+								<span class="post-time"><i class="far fa-calendar"></i>
+                <small class="time-stamp"><?php echo Mage::getModel('core/date')->date('M d, Y', $_posts->getCreatedAt());  ?></small></span>
+							  <i class="fas fa-th-list"></i>
+							  <span class="comment-post-link"><?php echo $this->getCategoryName($_posts->getCategoryId())->getName(); ?></span>
+        		</div>
+
+        </div>
+    <?php endforeach;?>
+    </div>
+<?php else : ?>
+    <?php echo Mage::helper('imi_blog')->__('There are no posts at this moment');?>
+<?php endif;?>

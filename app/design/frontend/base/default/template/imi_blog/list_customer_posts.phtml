@@ -1,0 +1,126 @@
+<?php
+/**
+ * IMI_Blog extension
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the MIT License
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/mit-license.php
+ *
+ * @category       IMI
+ * @package        IMI_Blog
+ * @copyright      Copyright (c) 2018
+ * @license        http://opensource.org/licenses/mit-license.php MIT License
+ */
+/**
+ * Posts list template
+ *
+ * @category    IMI
+ * @package     IMI_Blog
+ * @author      Ultimate Module Creator
+ */
+?>
+
+<div class="imi_blog_posts">
+<div class="cs-loader" style="display:none">
+  <div class="cs-loader-inner">
+    <label>	●</label>
+    <label>	●</label>
+    <label>	●</label>
+    <label>	●</label>
+    <label>	●</label>
+    <label>	●</label>
+  </div>
+</div>
+<?php
+ $links = $this->getAjaxLinks();
+ ?>
+<?php $_postss = $this->getmyposts(); ?>
+<div class="page-title posts-title addinqure">
+    <h1><?php echo Mage::helper('imi_blog')->__('Posts') ?></h1>
+    <a type="submit" href="<?php echo Mage::getUrl('imi_blog/inqueries/add'); ?>" class="button addinqure">
+        <span><span><?php echo $this->__('Add Inquiry'); ?></span></span>
+    </a>
+</div>
+
+
+<?php if (count($_postss->getData()) > 0) :?>
+    <?php echo $this->getPagerHtml(); ?>
+    <div class="posts-list-container imi_posts">
+    <?php foreach ($_postss as $_posts) : ?>
+        <div class="posts-list-item">
+            <div class="title">
+               <strong>
+                <?php echo $_posts->getTitle();?>
+              </strong>
+            </div>
+            <?php echo $_posts->getDescription();?>
+            <?php if($_posts->getImage() != '/')
+            { ?>
+                <img class="post_image" src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA).'posts/image'.$_posts->getImage();?>" alt = "<?php echo  $_posts->getTitle(); ?>" title="<?php echo $_posts->getTitle(); ?>">
+            <?php } ?>
+            <div class="post-header">
+        				<p class="post-by">
+        				      <span class="post-user"><i class="fas fa-user-tie"></i><span><?php echo ($_posts->getIsAdmin() == 1) ? $this->__('Posted by admin') : $this->__('Posted by customer'); ?></span></span>
+        				</p>
+								<span class="post-time"><i class="far fa-calendar"></i>
+                <small class="time-stamp"><?php echo Mage::getModel('core/date')->date('M d, Y', $_posts->getCreatedAt());  ?></small></span>
+        		</div>
+            <div class="comments">
+                <?php if(Mage::getStoreConfig('imi_blog/posts/allowcomments')){ ?>
+                  <div class="commentdata">
+                    <form method="post" class="formsubmit" method="post">
+                        <span class="error"></span>
+                        <input name="form_key" type="hidden" value="<?php echo Mage::getSingleton('core/session')->getFormKey() ?>" />
+                        <input name="post_id" type="hidden" class="post_id" value="<?php echo $_posts->getId(); ?>" />
+                        <input type="text" name="comment" value="" placeholder="<?php echo $this->__('Please type your comment'); ?>" id="comment_text" class="comment_text">
+                        <button type="submit" class="push_comment">
+                          <i class="fas fa-arrow-circle-right"></i>
+                        </button>
+                    </form>
+                  </div>
+                <?php } ?>
+            <div class="viewcomments">
+                <?php $this->getChild("posts_comments")->setData("posts", $_posts); ?>
+                <?php echo $this->getChildHtml('posts_comments',false); ?>
+            </div>
+          </div>
+        </div>
+    <?php endforeach;?>
+    </div>
+    <?php echo $this->getPagerHtml(); ?>
+<?php else : ?>
+    <?php echo Mage::helper('imi_blog')->__('There are no posts at this moment');?>
+<?php endif;?>
+<script>
+jQuery(document).ready(function($){
+  $('.formsubmit').on('submit', function (e) {
+    e.preventDefault();
+    var comment = $(this).find('.comment_text').val();
+    var post_id = $(this).find('.post_id').val();
+    var current = $(this);
+    $('.cs-loader').show();
+    $.ajax({
+        url: "<?php echo $links['viewcomment']; ?>",
+        method: "POST",
+        data: { post_id : post_id , comment : comment},
+        success: function(data) {
+          var returnedData = $.parseJSON(data);
+          $('.cs-loader').hide(200);
+          if(Number(returnedData.success) == 2){
+              window.location.href = "<?php echo Mage::getUrl('customer/account/login') ?>";
+          }
+          if(Number(returnedData.success) == 0){
+              current.find('.error').html('<?php echo $this->__('You have an error'); ?>');
+          }else{
+            current.closest('.comments').find('.viewcomments').html(returnedData.html);
+            current.find('.comment_text').val('');
+          }
+        }
+    });
+  });
+});
+</script>
+</div>

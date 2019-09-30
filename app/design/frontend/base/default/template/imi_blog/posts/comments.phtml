@@ -1,0 +1,44 @@
+<?php
+$comments = $this->getCommentsLimit();
+
+?>
+<div class="commentsclass">
+  <span><?php echo $this->__('There is %d Comments',$this->getNumberofComments()); ?></span>
+  <?php foreach ($comments as $comment) { ?>
+    <div class="commentitem">
+      <div class="title">
+        <?php if(!$comment->getIsAdmin()){ ?>
+        <?php echo $comment->getRepondName(); ?>
+      <?php }else{echo $this->__('Admin');} ?>
+
+      </div>
+      <span>
+        <?php echo $comment->getComment(); ?>
+      </span>
+      <div class="date">
+        <small class="time-stamp"><?php echo Mage::getModel('core/date')->date('M d, Y H:i', $comment->getCreatedAt());  ?></small></span>
+      </div>
+        <?php $replies = $this->getCommentsReplies($comment->getId()); ?>
+        <?php
+        if(count($replies->getData())){
+          foreach ($replies as $key => $reply) { ?>
+          <div class="replies">
+              <div class="title">
+                <?php echo $this->__('Admin'); ?>
+              </div>
+              <span>
+                <?php echo $reply->getReply(); ?>
+              </span>
+              <div class="date">
+                <small class="time-stamp"><?php echo Mage::getModel('core/date')->date('M d, Y H:i', $reply->getCreatedAt());  ?></small></span>
+              </div>
+          </div>
+
+          <?php }
+        }?>
+    </div>
+  <?php } ?>
+    <?php if($this->viewDetails()){ ?>
+      <a href="<?php echo Mage::getUrl($this->getPosts()->getUrlKey()); ?>"><?php echo $this->__('View more Details'); ?></a>
+    <?php } ?>
+</div>

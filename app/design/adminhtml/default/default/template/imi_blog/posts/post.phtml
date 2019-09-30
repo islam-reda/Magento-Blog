@@ -1,0 +1,19 @@
+<div class="entry-edit">
+    <div class="entry-edit-head">
+    <h4 class="icon-head head-edit-form fieldset-legend"><?php echo $this->__('Add Comment'); ?></h4>
+    <div class="form-buttons"></div>
+</div>
+    <div class="fieldset" id="posts_posts_form">
+      <div class="hor-scroll">
+          <table class="form-list">
+            <tr>
+              <td class="label"><?php echo $this->__('Comment'); ?></td>
+              <td class="value">
+                  <input id="posts_id" value="<?php echo $this->getRequest()->getParam('id'); ?>" name="posts[post_id]" type="hidden">
+                  <textarea id="posts_comment" name="posts[comment]" class=" required-entry required-entry textarea" rows="2" cols="15"></textarea>
+              </td>
+            </tr>
+          </table>
+      </div>
+    </div>
+</div>

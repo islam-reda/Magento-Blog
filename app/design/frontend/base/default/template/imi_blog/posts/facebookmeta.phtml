@@ -1,0 +1,7 @@
+
+<?php $_posts = $this->getCurrentPosts();?>
+<meta property="og:url"           content="<?php echo Mage::getUrl($_posts->getUrlKey()); ?>" />
+<meta property="og:type"          content="website" />
+<meta property="og:title"         content="<?php echo  $_posts->getTitle(); ?>" />
+<meta property="og:description"   content="<?php echo  $_posts->getDescription(); ?>" />
+<meta property="og:image"         content="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA).'posts/image'.$_posts->getImage();?>" />

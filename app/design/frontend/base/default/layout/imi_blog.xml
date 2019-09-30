@@ -1,0 +1,109 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * IMI_Blog extension
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the MIT License
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/mit-license.php
+ *
+ * @category       IMI
+ * @package        IMI_Blog
+ * @copyright      Copyright (c) 2018
+ * @license        http://opensource.org/licenses/mit-license.php MIT License
+ */
+-->
+<layout>
+    <default>
+        <reference name="top.links">
+            <action method="addLink" translate="label title" module="imi_blog">
+                <label>Posts</label>
+                <url helper="imi_blog/posts/getPostssUrl" />
+                <title>Posts</title>
+                <prepare />
+                <urlParams/>
+                <position>120</position>
+            </action>
+        </reference>
+        <reference name="head">
+             <action method="addCss"  ifconfig="imi_blog/posts/fontawesome"><stylesheet>css/imi_blog/fontawesome.css</stylesheet></action>
+             <action method="addItem" ifconfig="imi_blog/posts/jquery"><type>skin_js</type><name>js/imi_blog/jquery.js</name></action>
+             <action method="addCss"><stylesheet>css/imi_blog/posts.css</stylesheet></action>
+             <block type="imi_blog/posts_view" name="blogmeta" template="imi_blog/posts/captcha.phtml" />
+             <action method="addItem" ifconfig="imi_blog/posts/owlcarausel"><type>skin_js</type><name>js/imi_blog/owl.carousel.min.js</name></action>
+             <action method="addCss" ifconfig="imi_blog/posts/owlcarausel"><stylesheet>css/imi_blog/owl.theme.default.min.css</stylesheet></action>
+             <action method="addCss" ifconfig="imi_blog/posts/owlcarausel"><stylesheet>css/imi_blog/owl.carousel.min.css</stylesheet></action>
+        </reference>
+    </default>
+    <imi_blog_posts_index translate="label" module="imi_blog">
+        <label>Posts list</label>
+        <update handle="page_two_columns_left" />
+        <reference name="left">
+          <block type="imi_blog/category_tree" name="posts_category" template="imi_blog/category/category.phtml" />
+        </reference>
+        <reference name="head">
+            <action method="addItem"><type>skin_js</type><js>js/imi_blog/tree.js</js></action>
+        </reference>
+        <reference name="content">
+            <block type="imi_blog/posts_list" name="posts_list" template="imi_blog/posts/list.phtml">
+              <block type="imi_blog/posts_comments" name="posts_comments" template="imi_blog/posts/comments.phtml"/>
+            </block>
+        </reference>
+    </imi_blog_posts_index>
+    <imi_blog_posts_view translate="label" module="imi_blog">
+        <label>Posts view page</label>
+        <reference name="head">
+            <block type="imi_blog/posts_view" name="facebookmeta" template="imi_blog/posts/facebookmeta.phtml" />
+        </reference>
+        <update handle="page_two_columns_left" />
+        <reference name="left">
+          <block type="imi_blog/posts_list" name="posts_category" template="imi_blog/posts/recentposts.phtml" />
+        </reference>
+        <reference name="content">
+            <block type="imi_blog/posts_view" name="posts_view" template="imi_blog/posts/view.phtml">
+              <block type="imi_blog/posts_commentsview" name="posts_comments" template="imi_blog/posts/comments.phtml"/>
+            </block>
+        </reference>
+    </imi_blog_posts_view>
+
+
+    <imi_blog_inqueries_add>
+        <update handle="customer_account"/>
+          <reference name="head">
+            <action method="setTitle"><title>New Inquiry</title></action>
+          </reference>
+        <reference name="content">
+            <block type="imi_blog/inqueries"  name="list_myblock" template="imi_blog/inqueries.phtml">
+              <block type="core/messages" name="global_messages" as="global_messages"/>
+            </block>
+        </reference>
+    </imi_blog_inqueries_add>
+    <imi_blog_inqueries_index>
+        <update handle="customer_account"/>
+          <reference name="head">
+            <action method="setTitle"><title>List My posts</title></action>
+          </reference>
+        <reference name="content">
+            <block type="imi_blog/inqueries"  name="list_myblock" template="imi_blog/list_customer_posts.phtml">
+              <block type="imi_blog/posts_commentsview" name="posts_comments" template="imi_blog/posts/comments.phtml"/>
+            </block>
+        </reference>
+    </imi_blog_inqueries_index>
+
+    <customer_account>
+
+        <reference name="customer_account_navigation">
+            <action method="addLink" translate="label" module="customer">
+                <name>custom_menu</name>
+                <path>imi_blog/inqueries/index</path>
+                <label>My Inquiries</label>
+            </action>
+
+        </reference>
+
+    </customer_account>
+
+</layout>

@@ -1,0 +1,5 @@
+<?php
+$allowcaptcha = Mage::getStoreConfig('imi_blog/posts/allowcaptcha');
+if($allowcaptcha){ ?>
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+<?php } ?>
